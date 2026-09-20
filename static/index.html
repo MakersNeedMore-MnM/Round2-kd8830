@@ -1,0 +1,90 @@
+<!-- static/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Smart Queue Bot · Operator Console</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">+</div>
+    <div>
+      <h1>Smart Hospital Queue Bot</h1>
+      <p class="sub" id="hospital-name">Operator console</p>
+    </div>
+  </div>
+
+  <div class="statstrip" id="statstrip"></div>
+
+  <div class="controls">
+    <span id="llm-badge" class="badge badge-muted">LLM: checking…</span>
+    <span id="ws-badge" class="badge badge-muted">Socket: offline</span>
+    <button id="btn-tick" class="btn btn-ghost">Simulate tick</button>
+    <button id="btn-seed" class="btn btn-ghost">Reseed demo</button>
+  </div>
+</header>
+
+<main class="grid">
+
+  <!-- ── LEFT: live queue + booking ─────────────────────────────── -->
+  <section class="panel">
+    <h2>Live Queue <span class="hint">hospital data feed</span></h2>
+    <div id="queue-list" class="queue-list"></div>
+
+    <h2 class="mt">Book Appointment</h2>
+    <form id="book-form" class="form">
+      <input name="patient_name" placeholder="Patient name" required />
+      <input name="phone" placeholder="Phone (+91…)" required />
+      <input name="department" placeholder="Department" list="dept-list" required />
+      <datalist id="dept-list"></datalist>
+      <input name="doctor" placeholder="Doctor" list="doc-list" required />
+      <datalist id="doc-list"></datalist>
+      <button class="btn btn-primary" type="submit">Book + issue token</button>
+    </form>
+  </section>
+
+  <!-- ── CENTRE: pending approvals ──────────────────────────────── -->
+  <section class="panel">
+    <h2>
+      Pending Approvals
+      <span id="pending-count" class="pill">0</span>
+    </h2>
+    <p class="hint">
+      The bot drafted these. Nothing reaches a patient until you approve or edit it.
+    </p>
+    <div id="pending-list" class="pending-list"></div>
+  </section>
+
+  <!-- ── RIGHT: activity ────────────────────────────────────────── -->
+  <section class="panel">
+    <h2>Activity Feed</h2>
+    <div id="log-list" class="log-list"></div>
+  </section>
+
+  <!-- ── BOTTOM: appointments table ─────────────────────────────── -->
+  <section class="panel panel-full">
+    <h2>Appointments</h2>
+    <div class="table-wrap">
+      <table id="appt-table">
+        <thead>
+          <tr>
+            <th>Token</th><th>Patient</th><th>Department</th><th>Doctor</th>
+            <th>Status</th><th>Position</th><th>Predicted start</th>
+            <th>Wait</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<div id="toast" class="toast"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
